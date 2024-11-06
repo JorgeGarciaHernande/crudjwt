@@ -12,6 +12,9 @@ app.use(express.json()); // Permite analizar las solicitudes con formato JSON
 // Configuración de la conexión a la base de datos PostgreSQL
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL, // Usaremos una variable de entorno para la URL de la base de datos
+  ssl: {
+    rejectUnauthorized: false // Importante si estás usando Render y la base de datos requiere SSL
+  }
 });
 
 // Definir la ruta para autenticación
