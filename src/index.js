@@ -13,8 +13,13 @@ app.use(express.json()); // Permite analizar las solicitudes con formato JSON
 const authRoutes = require('./routes/authRoutes');
 app.use('/auth', authRoutes);
 
-// Configura el puerto del servidor
-const PORT = process.env.PORT || 4000;
+// Ruta de prueba
+app.get('/', (req, res) => {
+  res.send('Servidor en funcionamiento');
+});
+
+// Configura el puerto en el que correrá el servidor
+const PORT = process.env.PORT || 4000; // Aquí usamos el puerto que Render nos asignará
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en el puerto ${PORT}`);
 });

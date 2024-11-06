@@ -2,16 +2,25 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { Pool } = require('pg');
 
+// Configuración de la conexión a la base de datos PostgreSQL
+const { Pool } = require('pg');
+
+// Configuración de la conexión a la base de datos PostgreSQL
 const pool = new Pool({
-    connectionString: process.env.DATABASE_URL,
-    ssl: {
-      rejectUnauthorized: false // Necesario si la base de datos requiere SSL
-    }
-  });
-  
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false // Importante si estás usando Render y la base de datos requiere SSL
+  }
+});
+
+
 // Registro de usuario
 const register = async (req, res) => {
   const { username, password } = req.body;
+
+  if (!username || !password) {
+    return res.status(400).json({ error: 'Username and password are required' });
+  }
 
   try {
     // Encriptar la contraseña
@@ -24,7 +33,7 @@ const register = async (req, res) => {
       [username, hashedPassword]
     );
 
-    res.status(201).json(result.rows[0]);
+    res.status(201).json({ id: result.rows[0].id, username: result.rows[0].username });
   } catch (error) {
     console.error('Error registrando el usuario:', error);
     res.status(500).json({ error: 'Error en el servidor' });
@@ -34,6 +43,10 @@ const register = async (req, res) => {
 // Login de usuario
 const login = async (req, res) => {
   const { username, password } = req.body;
+
+  if (!username || !password) {
+    return res.status(400).json({ error: 'Username and password are required' });
+  }
 
   try {
     // Buscar el usuario en la base de datos
