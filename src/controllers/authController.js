@@ -1,18 +1,6 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const { Pool } = require('pg');
-
-// Configuración de la conexión a la base de datos PostgreSQL
-const { Pool } = require('pg');
-
-// Configuración de la conexión a la base de datos PostgreSQL
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false // Importante si estás usando Render y la base de datos requiere SSL
-  }
-});
-
+const pool = require('../db'); // Importar la conexión desde un archivo separado
 
 // Registro de usuario
 const register = async (req, res) => {
