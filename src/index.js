@@ -22,7 +22,7 @@ const authRoutes = require('./routes/authRoutes');
 app.use('/auth', authRoutes);
 
 // Configura el puerto en el que correrá el servidor
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 4000; // Aquí usamos el puerto que Render nos asignará
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en el puerto ${PORT}`);
 });
